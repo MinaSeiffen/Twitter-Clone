@@ -7,6 +7,7 @@ import {v2 as cloudinary} from "cloudinary"
 import authRoutes from "./Routes/auth.router.js"
 import userRoutes from "./Routes/user.router.js"
 import postRoutes from "./Routes/post.router.js"
+import notificationRoutes from "./Routes/notification.router.js"
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ app.use(cookieParser())
 app.use("/api/auth" , authRoutes)
 app.use("/api/user" , userRoutes)
 app.use("/api/post" , postRoutes)
+app.use("/api/notification" , notificationRoutes)
 
 
 app.listen(port , ()=>{
