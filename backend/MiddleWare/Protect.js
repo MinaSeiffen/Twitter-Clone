@@ -20,7 +20,7 @@ export const protect = async (req , res , next) => {
             return res.status(404).json({error: "User Not Found "})
         }
 
-        res.user = user
+        req.user = user
 
         next()
     } catch (error) {
