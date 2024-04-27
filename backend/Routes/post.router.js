@@ -4,7 +4,7 @@ import { commentOnPost, createPost, deletePost, getAllPosts, getFollowingPosts, 
 
 const router = express.Router()
 
-router.get('/', protect , getAllPosts)
+router.get('/all', protect , getAllPosts)
 router.get('/following', protect , getFollowingPosts)
 router.get('/likes/:id', protect , getLikedPosts)
 router.get('/user/:userName', protect , getUserPosts)
