@@ -4,41 +4,50 @@ import PostSkeleton from "../Skeletons/PostSkeleton";
 import { useQuery } from "@tanstack/react-query"
 import { useEffect } from "react";
 
-const Posts = ({ feedType }) => {
-	const getEndPoint = ()=>{
+const Posts = ({ feedType, userName, userId }) => {
+	const getEndpoint = () => {
 		switch (feedType) {
 			case "forYou":
-				return "/api/post/all"
+				return "/api/post/all";
 			case "following":
-				return "/api/post/following"
-			default :
-				return "/api/post/all"
+				return "/api/post/following";
+			case "posts":
+				return `/api/post/user/${userName}`;
+			case "likes":
+				return `/api/post/likes/${userId}`;
+			default:
+				return "/api/posts/all";
 		}
-	}
+	};
 
-	const post_EndPoint = getEndPoint()
+	const POST_ENDPOINT = getEndpoint();
 
-	const {data: posts , isLoading , refetch , isRefetching} = useQuery({
+	const {
+		data: posts,
+		isLoading,
+		refetch,
+		isRefetching,
+	} = useQuery({
 		queryKey: ["posts"],
-		queryFn: async ()=>{
+		queryFn: async () => {
 			try {
-				const res = await fetch(post_EndPoint)
-			const data = await res.json()
+				const res = await fetch(POST_ENDPOINT);
+				const data = await res.json();
 
-			if (!res.ok) {
-				throw new Error(data.error || "Can not find posts")
-			}
+				if (!res.ok) {
+					throw new Error(data.error || "Something went wrong");
+				}
 
-			return data
+				return data;
 			} catch (error) {
-				throw new Error(error)
+				throw new Error(error);
 			}
-		}
-	})
+		},
+	});
 
-	useEffect(()=>{
-		refetch()
-	} , [refetch , feedType])
+	useEffect(() => {
+		refetch();
+	}, [feedType, refetch, userName]);
 
 	return (
 		<>
@@ -49,7 +58,9 @@ const Posts = ({ feedType }) => {
 					<PostSkeleton />
 				</div>
 			)}
-			{!isLoading && !isRefetching && posts?.length === 0 && <p className='text-center my-4'>No posts in this tab. Switch 👻</p>}
+			{!isLoading && !isRefetching && posts?.length === 0 && (
+				<p className='text-center my-4'>No posts in this tab. Switch 👻</p>
+			)}
 			{!isLoading && !isRefetching && posts && (
 				<div>
 					{posts.map((post) => (

@@ -221,7 +221,7 @@ export const getUserPosts = async (req, res) => {
     }
 
     const posts = await postModel
-      .findOne({ user: user._id })
+      .find({ user: user._id })
       .sort({ createdAt: -1 })
       .populate({
         path: "user",
