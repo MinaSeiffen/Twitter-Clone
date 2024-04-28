@@ -82,7 +82,7 @@ export const commentOnPost = async (req, res) => {
 
     await post.save();
 
-    res.status(200).json(post);
+    res.status(200).json(post.comments);
   } catch (error) {
     res.status(500).json({ error: "internal server error" });
   }
