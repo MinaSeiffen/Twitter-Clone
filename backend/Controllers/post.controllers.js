@@ -109,7 +109,7 @@ export const likeAndUnlikePost = async (req, res) => {
 
       const updatedLikes = post.likes.filter((id)=> id.toString() !== userId.toString())
 
-      res.status(200).json(updatedLikes);
+      res.status(200).json({updatedLikes, MSG: "Post Unliked Successfully"});
 
     } else {
       post.likes.push(userId);
@@ -129,7 +129,7 @@ export const likeAndUnlikePost = async (req, res) => {
 
       const updatedLikes = post.likes
 
-      res.status(200).json(updatedLikes);
+      res.status(200).json({updatedLikes, MSG: "Post Liked Successfully"});
     }
   } catch (error) {
     res.status(500).json({ error: "internal server error" });

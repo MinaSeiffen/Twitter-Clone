@@ -64,12 +64,12 @@ const Post = ({ post }) => {
         throw new Error(error)        
       }
     }, 
-    onSuccess: (updatedLikes)=>{
-      toast.success("Post Liked Successfully");
+    onSuccess: (data)=>{
+      toast.success(data.MSG);
       queryClient.setQueryData(["posts"] , (oldData)=>{
         return oldData.map((p) => {
           if (p._id === post._id) {
-           return {...p, likes : updatedLikes} 
+           return {...p, likes : data.updatedLikes} 
           }
           return p
         })
